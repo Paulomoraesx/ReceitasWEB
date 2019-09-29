@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Noticias</title>
+</h:head>
+<h:body>
+	<div align="center" style="margin-top: 85px;">
+		<p:outputLabel value="Seja Bem vindo" />
+		<br />
+		<h:form>
+		<p:commandButton value="Gerenciar Editorias"
+			action="#{jornalistaBean.redirecionarParaPage('editoria/manterEditoria')}" />
+		<p:commandButton value="Gerenciar Jornalistas"
+			action="#{editoriaBean.redirecionarParaPage('jornalista/manterJornalista')}" />
+		</h:form>
+	</div>
+</h:body>
+</html>

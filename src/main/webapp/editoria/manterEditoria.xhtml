@@ -1,0 +1,69 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Gerenciamento de Editorias</title>
+</h:head>
+<h:body>
+	<h:form id="formTela">
+	<p:outputPanel id="panel">
+		<p:dataTable value="#{editoriaBean.lista}" var="e" id="tabela">
+			<p:column headerText="ID">
+				<p:outputLabel value="#{e.id}" />
+			</p:column>
+			<p:column headerText="Nome">
+				<p:outputLabel value="#{e.nome}" />
+			</p:column>
+			<p:column headerText="Ação">
+				<p:commandButton value="Deletar" action="#{editoriaBean.remover(e)}" 
+				update="tabela"/>
+			</p:column>
+			</p:dataTable>
+			<p:commandButton value="Alterar" onclick="PF('abrirDialogEditar').show()" update="formEditar:panelEditar"/>
+			<p:commandButton value="Cadastrar" onclick="PF('abrirDialogCadastrar').show()"/>
+			<p:commandButton value="Gerenciar Jornalistas" 
+			action="#{editoriaBean.redirecionarParaPage('jornalista/manterJornalista')}"/>
+			</p:outputPanel>
+			</h:form>
+			
+			
+			
+			<!-- DIALOGS --> 
+			
+			<!-- DIALOG PARA EDITAR --> 
+			<p:dialog header="Editar Editoria" widgetVar="abrirDialogEditar" > 
+			<h:form id="formEditar">
+			<p:outputPanel id="panelEditar" columns="2">
+		<p:outputLabel value="Nome: " />
+		<p:selectOneMenu value="#{editoriaBean.editoria.id}">
+			<f:selectItems value="#{editoriaBean.lista}" var="e"
+				itemLabel="#{e.nome}" itemValue="#{e.id}" />
+		</p:selectOneMenu>
+		<p:inputText value="#{editoriaBean.editoria.nome}" />
+		<br/>
+		<p:commandButton value="Salvar" action="#{editoriaBean.alterar}" update=":formTela:panel"
+		oncomplete="PF('abrirDialogEditar').hide()" />
+		</p:outputPanel>
+			</h:form>
+			<p:commandButton value="Fechar" onclick="PF('abrirDialogEditar').hide()" />
+		    </p:dialog>
+		    
+		    
+		    <!-- DIALOG PARA CADASTRAR -->
+		 	<p:dialog header="Cadastrar Editoria" widgetVar="abrirDialogCadastrar">
+		 	<h:form id="formCadastrar">
+		 	<p:outputPanel id="panelCadastrar">
+			<p:outputLabel value="Nome: "/>
+			<p:inputText value="#{editoriaBean.editoria.nome}" />
+			<p:commandButton value="Salvar" action="#{editoriaBean.salvar}" update="formTela:panel" 
+			oncomplete="PF('abrirDialogCadastrar').hide()"/>
+			<p:commandButton value="Fechar" onclick="PF('abrirDialogCadastrar').hide()" />
+			</p:outputPanel>
+		</h:form>
+		 	</p:dialog>
+		
+		
+	
+</h:body>
+</html>
