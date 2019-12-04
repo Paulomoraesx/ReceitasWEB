@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:body>
+    <!-- DIALOG PARA CADASTRAR -->
+    <ui:composition template="/templates/templateGeral.xhtml">
+
+        <ui:define name="content">
+
+            <p:outputLabel value="Cadastro de Usuario"/>
+
+            <h:form id="formCadastrarUsuario">
+
+                <p:growl showDetail="true" id="msg"/>
+
+              <p:outputPanel id="panelCadastrarUsuario">
+
+                    <p:panelGrid columns="2">
+
+                        <p:outputLabel value="Nome: "/>
+                        <p:inputText value="#{usuarioMB.usuario.nomeUsuario}"/>
+
+                        <p:outputLabel value="Login: "/>
+                        <p:inputText value="#{usuarioMB.usuario.login}"/>
+
+                        <p:outputLabel value="Senha: "/>
+                        <p:inputText value="#{usuarioMB.usuario.senha}"/>
+
+                        <p:outputLabel value="Email: "/>
+                        <p:inputText validator="EmailValidator" required="true"
+                                     requiredMessage="Email é obrigatorio"
+                                     value="#{usuarioMB.usuario.email}"/>
+
+                        <p:outputLabel value="Telefone: "/>
+                        <p:inputText value="#{usuarioMB.usuario.telefone}"/>
+
+                    </p:panelGrid>
+
+                    <p:commandButton value="Salvar" action="#{usuarioMB.salvar}"
+                                     update="formCadastrarUsuario, formCadastrarUsuario:msg"/>
+
+                  <p:commandButton value="Visualizar Usuarios"
+                                   action="#{receitaMB.redirecionarParaPage('usuario/manterUsuario')}"/>
+
+                </p:outputPanel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

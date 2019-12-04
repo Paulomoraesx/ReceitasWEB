@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Receitas</title>
+    <h:outputStylesheet library="css" name="style2.css"/>
+</h:head>
+<h:body>
+    <h:form id="formLogin">
+        <p:growl showDetail="true"/>
+        <div align="center" class="content-login">
+
+            <p:outputLabel value="Seja Bem vindo" style="font-size: x-large"/>
+
+            <br/>
+            <br/>
+            <br/>
+
+            <p:panelGrid columns="2" styleClass="semBorda">
+                <p:outputLabel value="Login:"/>
+
+                <p:inputText id="nome" value="#{loginMB.usuario.login}"/>
+
+                <p:outputLabel value="Senha:"/>
+
+                <p:password id="senha" value="#{loginMB.usuario.senha}"/>
+            </p:panelGrid>
+
+            <p:separator/>
+            <br/>
+
+
+            <p:commandButton value="Confirmar" action="#{loginMB.envia}" update=":formLogin" ajax="true"/>
+
+
+            <br/>
+            <br/>
+
+            <p:commandLink action="#{receitaMB.redirecionarParaPage('pages/cadastrarUsuario')}"
+                           value="Não possue uma conta ? clique aqui" ajax="true"/>
+        </div>
+    </h:form>
+</h:body>
+</html>

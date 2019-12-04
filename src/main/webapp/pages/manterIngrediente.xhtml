@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<body>
+<ui:composition template="/templates/templateGeral.xhtml">
+    <ui:define name="content">
+        <h:form id="formDataIngrediente">
+            <p:growl showDetail="true" id="msgIngrediente"/>
+            <p:outputPanel id="panelID">
+
+                <p:dataTable value="#{ingredientesMB.listar}" var="i" id="tabelaIngrediente">
+                    <f:facet name="header">
+                        <h:outputText value="Ingredientes" style="font-size: x-large" styleClass="fonteSistema"/>
+                    </f:facet>
+                    <p:column headerText="ID" >
+                        <p:outputLabel value="#{i.id}"/>
+                    </p:column>
+                    <p:column headerText="Nome" filterBy="#{i.nome}">
+                        <p:outputLabel value="#{i.nome}"/>
+                    </p:column>
+                    <p:column headerText="Ação">
+                        <p:commandButton value="Deletar" action="#{ingredientesMB.remover(i)}"
+                                         ajax="true" update="formDataIngrediente, formDataIngrediente:msgIngrediente, formEditarIngrediente"/>
+                        <p:commandButton value="Alterar"
+                                         action="#{ingredientesMB.abrirDialogAlterarIngrediente(i)}"
+                                         update="formEditarIngrediente"/>
+                    </p:column>
+                </p:dataTable>
+
+            </p:outputPanel>
+        </h:form>
+
+        <p:dialog header="Editar Ingrediente" widgetVar="dlgAlterarIngrediente" closable="true" responsive="true"
+                  resizable="true"
+                  draggable="true">
+
+            <h:form id="formEditarIngrediente">
+                <p:panelGrid columns="2">
+
+                    <p:outputLabel value="Nome: "/>
+
+                    <p:selectOneMenu value="#{ingredientesMB.ingrediente.id}" disabled="true">
+                        <f:selectItems value="#{ingredientesMB.listar}" var="i"
+                                       itemLabel="#{i.nome}" itemValue="#{i.id}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="id: "/>
+                    <p:inputText value="#{ingredientesMB.ingrediente.id}"/>
+
+                    <p:outputLabel value="Nome: "/>
+                    <p:inputText value="#{ingredientesMB.ingrediente.nome}"/>
+
+                </p:panelGrid>
+
+                <p:commandButton value="Salvar" action="#{ingredientesMB.alterar}"
+                                 oncomplete="PF('dlgAlterarIngrediente').hide()" ajax="true" update="formDataIngrediente, formDataIngrediente:msgIngrediente"/>
+
+                <p:commandButton value="Fechar"
+                                 onclick="PF('dlgAlterarIngrediente').hide()"/>
+            </h:form>
+        </p:dialog>
+
+
+    </ui:define>
+</ui:composition>
+</body>
+</html>

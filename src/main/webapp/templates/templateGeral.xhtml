@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<f:metadata>
+    <f:viewAction action="#{receitaMB.carregarDadosTelaReceita()}" immediate="true"/>
+</f:metadata>
+<h:head>
+    <title>Sistema de Receitas</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <ui:insert name="head"/>
+</h:head>
+<h:body>
+
+    <header class="header">
+        <h1>Prato Feito</h1>
+        <h:form style="position: absolute; right: 10px;">
+            <p:outputLabel value="Bem Vindo(a) ! #{acessosMB.obterNomeUsuarioLogado()}" style="margin-right: 5px"/>
+            <p:commandButton value="Sair" actionListener="#{acessosMB.sair()}"/>
+        </h:form>
+    </header>
+
+
+    <aside class="menu-left">
+        <div align="center">
+            <h:form>
+                <p:tieredMenu>
+                    <p:submenu label="Receitas">
+                        <p:menuitem value="Visualizar Receitas"
+                                    action="#{receitaMB.redirecionarParaPage('receita/manterReceita')}"/>
+                        <p:menuitem value="Cadastrar Receitas"
+                                    action="#{receitaMB.redirecionarParaPage('pages/cadastrarReceita')}"/>
+                    </p:submenu>
+
+                    <p:submenu label="Usuario">
+                        <p:menuitem value="Visualizar  Usuario"
+                                    action="#{usuarioMB.redirecionarParaPage('usuario/manterUsuario')}"/>
+                        <p:menuitem value="Cadastrar Usuario"
+                                    action="#{usuarioMB.redirecionarParaPage('pages/cadastrarUsuario')}"/>
+                    </p:submenu>
+                    <p:submenu label="Ingredientes">
+                        <p:menuitem value="Visualizar  Ingrediente"
+                                    action="#{ingredientesMB.redirecionarParaPage('pages/manterIngrediente')}"/>
+                        <p:menuitem value="Cadastrar Ingrediente"
+                                    action="#{ingredientesMB.redirecionarParaPage('pages/cadastrarIngrediente')}"/>
+                    </p:submenu>
+                </p:tieredMenu>
+            </h:form>
+        </div>
+    </aside>
+
+    <main class="content">
+        <div align="center">
+            <ui:insert name="content"/>
+        </div>
+    </main>
+</h:body>
+</html>

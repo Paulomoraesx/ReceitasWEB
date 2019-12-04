@@ -4,12 +4,16 @@
      http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 	version="2.0">
 
-	<persistence-unit name="noticiasPU">
-		<class>br.edu.cesmac.si.noticia.domain.Editoria</class>
+	<persistence-unit name="receitasPU">
+		<class>br.edu.cesmac.si.receita.model.Receita</class>
+		<class>br.edu.cesmac.si.receita.model.Usuario</class>
+		<class>br.edu.cesmac.si.receita.model.Ingrediente</class>
+
 		<properties>
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 			<!-- Configurações das propriedades JDBC/JPA -->
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:postgresql://localhost:5432/noticiasSI" />
+				value="jdbc:postgresql://localhost:5432/receitas" />
 			<property name="javax.persistence.jdbc.user"
 				value="postgres" />
 			<property name="javax.persistence.jdbc.password"

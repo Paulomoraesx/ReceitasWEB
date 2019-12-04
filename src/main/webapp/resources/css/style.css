@@ -1,0 +1,78 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+h1{
+    font-family: "Apple Chancery, cursive";
+    font-style: italic;
+    color: white;
+    font-size: x-large;
+}
+.fonteSistema{
+    font-family: "Apple Chancery, cursive";
+    font-style: italic;
+    font-size: large !important;
+}
+
+body {
+    font-family: sans-serif;
+    font-size: 12px;
+    display: grid;
+    grid-template-columns: 20% 1fr;
+    grid-template-rows: 10% 1fr;
+    grid-template-areas: "header header"
+                         "menu-left content";
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+    color: #F6A828 !important;
+    font-weight: bold !important;
+}
+
+.header {
+    width: 100%;
+    grid-area: header;
+    background-color: #F6A828;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-family: "Apple Chancery, cursive";
+    font-style: italic;
+    color: white;
+}
+
+.menu-left {
+    grid-area: menu-left;
+    background-color: #f6e364;
+    padding: 20px;
+}
+
+.content {
+    grid-area: content;
+    padding: 20px;
+}
+
+.card-receita {
+    border: solid 0.5px #c1c1c1;
+    width: 50%;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.25);
+}
+
+.semBorda tr, .semBorda td {
+    border: none !important;
+    background: transparent !important;
+}
+
+.div-filtar-receitas {
+    color: white;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+}
+.usuarioLogado{
+}

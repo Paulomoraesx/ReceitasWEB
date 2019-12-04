@@ -1,0 +1,188 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui">
+
+<f:metadata>
+    <f:viewAction action="#{acessosMB.controleSessao()}" immediate="true"/>
+</f:metadata>
+
+<body>
+<ui:composition template="/templates/templateGeral.xhtml">
+
+    <ui:define name="content">
+
+        <p:outputPanel style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+
+            <h:form id="formBusca">
+
+                <p:panelGrid columns="4" styleClass="semBorda">
+
+                    <p:outputLabel value="Pesquisar: "/>
+
+                    <p:inputText placeholder="Pesquisar Receitas" value="#{receitaMB.nomeBusca}" required="true"
+                                 requiredMessage="Informe o nome da receita para buscar" id="nomeBusca"/>
+
+                    <p:commandButton value="Buscar" ajax="true" action="#{receitaMB.listarComFiltro()}"
+                                     update=":formTela"
+                                     process="@this, nomeBusca"/>
+
+                    <p:commandButton value="Limpar Busca" ajax="true" immediate="true"
+                                     action="#{receitaMB.limparBusca()}"
+                                     update=":formTela"/>
+                </p:panelGrid>
+
+            </h:form>
+
+        </p:outputPanel>
+
+            <h:form id="formTela">
+
+                <p:outputPanel id="panel">
+
+                <p:growl showDetail="true" id="msgManterReceita"/>
+
+                <br/><br/>
+
+                <p:repeat value="#{receitaMB.listarTodasReceitas()}" var="r">
+
+                    <div class="card-receita" align="center">
+
+                        <p:panelGrid columns="2" styleClass="semBorda">
+
+                            <p:outputLabel value="Receita: " style="font-size: x-large" styleClass="fonteSistema"/>
+                            <p:outputLabel value="#{r.nome}" style="font-size: x-large"/>
+                        </p:panelGrid>
+
+                        <br/>
+
+                        <p:panelGrid columns="2" styleClass="semBorda">
+
+                            <p:outputLabel value="Publicada por: " style="font-size: x-large" styleClass="fonteSistema"/>
+                            <p:outputLabel value="#{r.usuario.nomeUsuario}" style="font-size: x-large"/>
+                        </p:panelGrid>
+
+                        <br/>
+
+                        <p:dataTable value="#{r.ingredientes}" var="i">
+
+                            <f:facet name="header">
+                                <h:outputText value="Ingredientes" styleClass="fonteSistema"/>
+                            </f:facet>
+
+                            <p:column>
+                                <h:outputText value="• #{i.nome} "/>
+                            </p:column>
+
+                        </p:dataTable>
+
+                        <p:panelGrid columns="1" styleClass="semBorda">
+
+                            <p:outputLabel value="Modo de preparo: " styleClass="fonteSistema"/>
+
+                            <p:outputLabel escape="false" value="#{r.modoDePreparo}"/>
+
+                        </p:panelGrid>
+
+                        <br/>
+
+                        <p:panelGrid columns="3" styleClass="semBorda">
+
+                            <p:commandButton value="Alterar" action="#{receitaMB.abrirDialogAlterarReceita(r)}"
+                                             update="formTela:panel, :formAlterarReceita"/>
+
+                            <p:commandButton value="Cadastrar Novo Ingrediente" process="@this"
+                                             onclick="PF('dlgCadastrarIngrediente').show();"
+                                             ajax="true" update="formDlgCadastrarIngrediente" immediate="true"/>
+
+                            <p:commandButton value="Deletar" ajax="true" action="#{receitaMB.remover(r)}"
+                                             update="formTela:panel, :formAlterarReceita"/>
+
+                        </p:panelGrid>
+                    </div>
+                </p:repeat>
+
+                </p:outputPanel>
+
+            </h:form>
+
+
+        <p:dialog header="Alterar Receita" widgetVar="dlgAlterarReceita" height="500" width="700">
+
+            <h:form id="formAlterarReceita">
+                <p:outputPanel id="panelAlterarReceitaDlg">
+                    <p:panelGrid columns="2" styleClass="semBorda">
+                        <p:selectOneMenu value="#{receitaMB.receita.id}">
+                            <f:selectItems value="#{receitaMB.listarTodasReceitas()}" var="r"
+                                           itemLabel="#{r.nome}" itemValue="#{r.id}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Digite o Nome da Receita: "/>
+                        <p:inputText value="#{receitaMB.receita.nome}"/>
+                    </p:panelGrid>
+
+                    <p:dataTable id="dtIngredientes" value="#{ingredientesMB.listar}" var="i"
+                                 selection="#{receitaMB.receita.ingredientes}" rowKey="#{i.id}">
+
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+                        <p:column headerText="Nome">
+                            <p:outputLabel value="#{i.nome}"/>
+                        </p:column>
+
+                    </p:dataTable>
+                    <p:outputLabel value="Digite o modo de preparo: "/>
+                    <br/>
+                    <p:textEditor widgetVar="editor1" value="#{receitaMB.receita.modoDePreparo}"
+                                  height="100"/>
+
+
+                    <p:commandButton value="Salvar" action="#{receitaMB.alterar}"
+                                     oncomplete="PF('dlgAlterarReceita').hide()"
+                                     update=":formTela, :formTela:msgManterReceita"/>
+                    <p:commandButton value="Fechar"
+                                     onclick="PF('dlgAlterarReceita').hide()"/>
+                </p:outputPanel>
+
+            </h:form>
+
+        </p:dialog>
+
+        <p:dialog header="Cadastrar Ingrediente" widgetVar="dlgCadastrarIngrediente">
+
+            <h:form id="formDlgCadastrarIngrediente">
+
+                <p:growl showDetail="true" id="msgIngredienteCadastrou"/>
+
+                <p:panelGrid columns="2">
+
+                    <p:outputLabel value="Digite o Nome do Ingrediente: "/>
+
+                    <p:inputText value="#{ingredientesMB.ingrediente.nome}"/>
+
+                </p:panelGrid>
+
+                <p:separator/>
+
+                <p:panelGrid columns="2" styleClass="semBorda">
+
+                    <p:commandButton value="Salvar" action="#{ingredientesMB.salvar}"
+                                     update="formTela, formTela:msgManterReceita"
+                                     oncomplete="PF('dlgCadastrarIngrediente').hide()"/>
+
+                    <p:commandButton value="Fechar"
+                                     onclick="PF('dlgCadastrarIngrediente').hide()"/>
+
+                </p:panelGrid>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>
+</body>
+</html>

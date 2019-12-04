@@ -1,0 +1,78 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<body>
+<ui:composition template="/templates/templateGeral.xhtml">
+    <ui:define name="content">
+        <h:form id="formID">
+            <p:growl showDetail="true" id="msgUsuario"/>
+            <p:outputPanel id="panelID">
+                <p:dataTable value="#{usuarioMB.listar}" var="u" id="tabela">
+                    <f:facet name="header">
+                        <h:outputText value="Usuarios" style="font-size: x-large" styleClass="fonteSistema"/>
+                    </f:facet>
+                    <p:column headerText="ID">
+                        <p:outputLabel value="#{u.id}"/>
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <p:outputLabel value="#{u.nomeUsuario}"/>
+                    </p:column>
+                    <p:column headerText="Ação">
+                        <p:commandButton value="Deletar" action="#{usuarioMB.remover(u)}"
+                                         ajax="true" update="formID, formID:msgUsuario, formEditarUsuario"/>
+                        <p:commandButton value="Alterar"
+                                         action="#{usuarioMB.abrirDialogAlterarUsuario(u)}"
+                                         update=":formEditarUsuario"/>
+                    </p:column>
+                </p:dataTable>
+
+            </p:outputPanel>
+        </h:form>
+
+        <p:dialog header="Editar Usuario" widgetVar="dlgAlterarUsuario" closable="true" responsive="true"
+                  resizable="true"
+                  draggable="true">
+
+            <h:form id="formEditarUsuario">
+                <p:panelGrid columns="2">
+
+                    <p:outputLabel value="Nome: "/>
+
+                    <p:selectOneMenu value="#{usuarioMB.usuario.id}">
+                        <f:selectItems value="#{usuarioMB.listar}" var="u"
+                                       itemLabel="#{u.nomeUsuario}" itemValue="#{u.id}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Nome: "/>
+                    <p:inputText value="#{usuarioMB.usuario.nomeUsuario}"/>
+
+                    <p:outputLabel value="Login: "/>
+                    <p:inputText value="#{usuarioMB.usuario.login}"/>
+
+                    <p:outputLabel value="Senha: "/>
+                    <p:inputText value="#{usuarioMB.usuario.senha}"/>
+
+                    <p:outputLabel value="Email: "/>
+                    <p:inputText validator="EmailValidator" value="#{usuarioMB.usuario.email}"/>
+
+                    <p:outputLabel value="Telefone: "/>
+                    <p:inputText value="#{usuarioMB.usuario.telefone}"/>
+
+                </p:panelGrid>
+
+                <p:commandButton value="Salvar" action="#{usuarioMB.alterar}"
+                                 oncomplete="PF('dlgAlterarUsuario').hide()" ajax="true" update="formID, formID:msgUsuario"/>
+
+                <p:commandButton value="Fechar"
+                                 onclick="PF('dlgAlterarUsuario').hide()"/>
+            </h:form>
+        </p:dialog>
+
+
+    </ui:define>
+</ui:composition>
+</body>
+</html>

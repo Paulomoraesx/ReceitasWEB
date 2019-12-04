@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<body>
+<ui:composition template="/templates/templateGeral.xhtml">
+    <ui:define name="content">
+        <h:body>
+            <p:outputLabel value="Cadastro de Ingredientes"/>
+
+                <h:form id="formCadadstrarIngrediente">
+                    <p:growl showDetail="true" id="msgIngredienteCadastrou"/>
+                    <p:panelGrid columns="2">
+                    <p:outputPanel id="panelCadastrarIngrediente">
+                        <p:outputLabel value="Digite o Nome do Ingrediente: "/>
+                        <p:inputText value="#{ingredientesMB.ingrediente.nome}"/>
+                        <p:commandButton value="Salvar" action="#{ingredientesMB.salvar}"
+                                         update="formCadadstrarIngrediente,formCadadstrarIngrediente:msgIngredienteCadastrou"/>
+                        <p:commandButton value="Visualizar Ingredientes"
+                                         action="#{receitaMB.redirecionarParaPage('pages/manterIngrediente')}"/>
+                    </p:outputPanel>
+                    </p:panelGrid>
+
+                </h:form>
+
+        </h:body>
+
+    </ui:define>
+</ui:composition>
+</body>
+</html>

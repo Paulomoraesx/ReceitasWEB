@@ -1,0 +1,81 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<body>
+
+<ui:composition template="/templates/templateGeral.xhtml">
+    <ui:define name="content">
+        <h:body>
+            <p:outputLabel value="Cadastro de Receitas"/>
+
+            <h:form id="formCadastrarReceita">
+
+                <p:growl showDetail="true" id="msgReceitas"/>
+
+                <p:outputPanel id="panelCadastrarReceita">
+
+                    <p:panelGrid columns="1" styleClass="semBorda">
+
+                        <p:outputLabel value="Digite o Nome da Receita: "/>
+
+                        <p:inputText value="#{receitaMB.receita.nome}" required="true" requiredMessage="Nome Obrigatorio"/>
+
+                        <p:outputLabel value="Digite o modo de preparo da sua receita:"/>
+
+<!--                        <p:inputTextarea value="#{receitaMB.receita.modoDePreparo}"/>-->
+
+                        <p:textEditor widgetVar="editor1" required="true" requiredMessage="Modo de preparo Obrigatorio"
+                                      value="#{receitaMB.receita.modoDePreparo}"
+                                      height="300" style="margin-bottom:10px"/>
+                    </p:panelGrid>
+
+                    <p:outputLabel value="Ingredidentes:"/>
+
+                    <p:dataTable value="#{ingredientesMB.listar}" var="i" id="dataIngredientes"
+                                 selection="#{receitaMB.receita.ingredientes}" rowKey="#{i.id}">
+
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+                        <p:column headerText="Nome">
+                            <p:outputLabel value="#{i.nome}"/>
+                        </p:column>
+
+                    </p:dataTable>
+                    <p:commandButton value="Salvar" action="#{receitaMB.salvar}" ajax="true"
+                                     update="formCadastrarReceita, formCadastrarReceita:msgReceitas"/>
+                    <p:commandButton value="Cadastrar Novo Ingrediente"
+                                     onclick="PF('CadastrarIngrediente').show()"
+                                     ajax="true" update="formDlgCadastrarIngrediente" immediate="true"/>
+                    <p:commandButton value="Visualizar Receitas"
+                                     action="#{receitaMB.redirecionarParaPage('receita/manterReceita')}"/>
+
+                </p:outputPanel>
+
+
+            </h:form>
+
+            <p:dialog header="Cadastrar Ingrediente" widgetVar="CadastrarIngrediente">
+                <h:form id="formDlgCadastrarIngrediente">
+                    <p:panelGrid columns="2">
+                        <p:outputPanel id="panelCadastrarIngredienteDlg">
+                            <p:growl showDetail="true" id="msgIngredienteCadastrou"/>
+                            <p:outputLabel value="Digite o Nome do Ingrediente: "/>
+                            <p:inputText value="#{ingredientesMB.ingrediente.nome}"/>
+                            <p:commandButton value="Salvar" action="#{ingredientesMB.salvar}"
+                                             update="formDlgCadastrarIngrediente, :formCadastrarReceita:dataIngredientes,
+                                             formDlgCadastrarIngrediente:msgIngredienteCadastrou"/>
+                            <p:commandButton value="Visualizar Ingredientes"
+                                             action="#{receitaMB.redirecionarParaPage('pages/manterIngrediente')}"/>
+                        </p:outputPanel>
+                    </p:panelGrid>
+                </h:form>
+            </p:dialog>
+        </h:body>
+
+    </ui:define>
+</ui:composition>
+</body>
+</html>

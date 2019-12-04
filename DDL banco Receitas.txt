@@ -1,0 +1,55 @@
+
+-- Drop table
+
+-- DROP TABLE public.usuarios;
+
+CREATE TABLE public.usuarios (
+	id serial NOT NULL,
+	login varchar NOT NULL,
+	senha varchar NOT NULL,
+	nome varchar NOT NULL,
+	email varchar NOT NULL,
+	telefone varchar NULL,
+	CONSTRAINT usuarios_pkey PRIMARY KEY (id)
+);
+
+-- Drop table
+
+-- DROP TABLE public.receitas;
+
+CREATE TABLE public.receitas (
+	id serial NOT NULL,
+	nome varchar NOT NULL,
+	id_usuario int4 NULL,
+	modo_de_preparo text NULL,
+	CONSTRAINT receitas_pkey PRIMARY KEY (id)
+);
+
+ALTER TABLE public.receitas 
+ADD CONSTRAINT receitas_id_usuario_fkey FOREIGN KEY (id_usuario) REFERENCES usuarios(id);
+
+
+-- Drop table
+
+-- DROP TABLE public.receita_ingredientes;
+
+CREATE TABLE public.receita_ingredientes (
+	id_receita int4 NULL,
+	id_ingrediente int4 NULL
+);
+
+ALTER TABLE public.receita_ingredientes ADD CONSTRAINT receita_ingredientes_id_ingrediente_fkey FOREIGN KEY (id_ingrediente) REFERENCES ingredientes(id);
+ALTER TABLE public.receita_ingredientes ADD CONSTRAINT receita_ingredientes_id_receita_fkey FOREIGN KEY (id_receita) REFERENCES receitas(id);
+
+
+-- Drop table
+
+-- DROP TABLE public.ingredientes;
+
+CREATE TABLE public.ingredientes (
+	id serial NOT NULL,
+	nome varchar NOT NULL,
+	CONSTRAINT ingredientes_pkey PRIMARY KEY (id)
+);
+
+
