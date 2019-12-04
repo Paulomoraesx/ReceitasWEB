@@ -24,6 +24,7 @@ public class UsuarioMB implements Serializable {
 	
 	public void salvar() throws IOException {
 		if (new UsuarioJpa().cadastrar(usuario)) {
+
 			MensagemUtil.sucesso("Cadastrado com sucesso", "Sucesso!");
 			redirecionarParaPage("pages/login");
 		} else {

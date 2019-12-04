@@ -49,7 +49,7 @@
                     <p:commandButton value="Cadastrar Novo Ingrediente"
                                      onclick="PF('CadastrarIngrediente').show()"
                                      ajax="true" update="formDlgCadastrarIngrediente" immediate="true"/>
-                    <p:commandButton value="Visualizar Receitas"
+                    <p:commandButton value="Visualizar Receitas" immediate="true" ajax="true"
                                      action="#{receitaMB.redirecionarParaPage('receita/manterReceita')}"/>
 
                 </p:outputPanel>

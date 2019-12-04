@@ -5,7 +5,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:body>
     <!-- DIALOG PARA CADASTRAR -->
-    <ui:composition template="/templates/templateGeral.xhtml">
+    <ui:composition template="/templates/templateCadastro.xhtml">
 
         <ui:define name="content">
 
@@ -26,7 +26,7 @@
                         <p:inputText value="#{usuarioMB.usuario.login}"/>
 
                         <p:outputLabel value="Senha: "/>
-                        <p:inputText value="#{usuarioMB.usuario.senha}"/>
+                        <p:password value="#{usuarioMB.usuario.senha}"/>
 
                         <p:outputLabel value="Email: "/>
                         <p:inputText validator="EmailValidator" required="true"
@@ -34,15 +34,16 @@
                                      value="#{usuarioMB.usuario.email}"/>
 
                         <p:outputLabel value="Telefone: "/>
-                        <p:inputText value="#{usuarioMB.usuario.telefone}"/>
+
+                        <p:inputMask mask="(99) 9 9999-9999" value="#{usuarioMB.usuario.telefone}"/>
 
                     </p:panelGrid>
-
+<!--                  <p:inputText value="#{usuarioMB.usuario.telefone}"/>-->
                     <p:commandButton value="Salvar" action="#{usuarioMB.salvar}"
                                      update="formCadastrarUsuario, formCadastrarUsuario:msg"/>
 
-                  <p:commandButton value="Visualizar Usuarios"
-                                   action="#{receitaMB.redirecionarParaPage('usuario/manterUsuario')}"/>
+                  <p:commandButton value="Voltar" immediate="true" ajax="true" process="@this"
+                                   action="#{receitaMB.redirecionarParaPage('pages/login')}"/>
 
                 </p:outputPanel>
             </h:form>

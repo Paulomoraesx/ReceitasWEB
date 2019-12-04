@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<f:metadata>
+    <f:viewAction action="#{receitaMB.carregarDadosTelaReceita()}" immediate="true"/>
+</f:metadata>
+<h:head>
+    <title>Sistema de Receitas</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <ui:insert name="head"/>
+</h:head>
+<h:body>
+
+    <header class="header">
+        <h1>Prato Feito</h1>
+    </header>
+
+
+    <aside class="menu-left">
+        <div align="center">
+        </div>
+    </aside>
+
+    <main class="content">
+        <div align="center">
+            <ui:insert name="content"/>
+        </div>
+    </main>
+</h:body>
+</html>
